@@ -1,11 +1,11 @@
-# Breast-bcSpatial
+# breast-bcspatial
 Code used to produce the final figures and tables of the study "Spatial Transcriptomics in Breast Cancer Reveals Tumour Microenvironment-Driven Drug Responses and Clonal Therapeutic Heterogeneity".
 
 ## Installation
 Use the git clone command to create a local copy:
 
 ```
-git clone https://github.com/cnio-bu/Breast-bcSpatial
+git clone https://github.com/cnio-bu/breast-bcspatial
 ```
 
 ## How to run
@@ -21,7 +21,7 @@ You need to download additional data folders from Zenodo (DOI: 10.5281/zenodo.10
 
 * **`beyondcell/functional`:** Contains Beyondcell functional objects with enrichment scores for all functional signatures.
 
-These objects were generated with the code available at [cnio-bu/bcSpatial](https://github.com/cnio-bu/bcSpatial).
+These objects were generated with the code available at [cnio-bu/ST-preprocess](https://github.com/cnio-bu/ST-preprocess).
 
 **References**
 
@@ -37,4 +37,4 @@ Once all data is downloaded, just run the code in the `scripts/` folder in order
 <!-- ## Citation -->
 
 ## Support
-If you have any questions, feel free to submit an [issue](https://github.com/cnio-bu/Breast-bcSpatial/issues).
+If you have any questions, feel free to submit an [issue](https://github.com/cnio-bu/breast-bcspatial/issues).
