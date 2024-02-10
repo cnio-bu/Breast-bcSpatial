@@ -1,0 +1,87 @@
+drugID	drug_name	MoA
+GSK256066_PRISM_K37590257	GSK256066	Anti-inflammatory / Immunosuppressant
+Nilotinib_GDSC_1013	NILOTINIB	Other
+Dabrafenib_GDSC_1373	DABRAFENIB	BRAF inhibitor
+PLX-4720_GDSC_1036	PLX-4720	BRAF inhibitor
+RO-3306_GDSC_1052	RO-3306	Cell cycle arrest
+BI-2536_CTRP_K64890080	BI-2536	Cell cycle arrest
+BI-2536_GDSC_1086	BI-2536	Cell cycle arrest
+Wee1 Inhibitor_GDSC_1046	Wee1 Inhibitor	Cell cycle arrest
+KW-2449_CTRP_K21718444	KW-2449	Cell cycle arrest
+Tozasertib_GDSC_1096	TOZASERTIB	Cell cycle arrest
+RVX-208_GDSC_1625	Apabetalone	DNA related agent
+BRD-K24690302_CTRP_K24690302	BRD-K24690302	DNA related agent
+VE821_GDSC_2111	VE821	DNA related agent
+NU7441_GDSC_1038	NU7441	DNA related agent
+Mitoxantrone_GDSC_1810	MITOXANTRONE	DNA related agent
+Oxaliplatin_GDSC_1806	Oxaliplatin	DNA related agent
+Teniposide_GDSC_1809	TENIPOSIDE	DNA related agent
+proscillaridin-a_PRISM_A11815689	proscillaridin-a	DNA related agent
+SN-38_CTRP_A36630025	SN-38	DNA related agent
+trifluridine_PRISM_K03243820	TRIFLURIDINE	DNA related agent
+gefitinib_CTRP_K64052750	gefitinib	EGFR inhibitor
+WZ4002_CTRP_K72420232	WZ4002	EGFR inhibitor
+WZ8040_CTRP_K81728688	WZ8040	EGFR inhibitor
+afatinib_CTRP_K66175015	afatinib	HER2 inhibitor
+afatinib_PRISM_K66175015	afatinib	HER2 inhibitor
+AST-1306_PRISM_K26838195	Allitinib	HER2 inhibitor
+tamoxifen_CTRP_K93754473	tamoxifen	Hormonal therapy
+Luminespib_GDSC_1559	LUMINESPIB	HSP inhibitor
+AT13387_CTRP_K58435339	AT13387	HSP inhibitor
+frentizole_PRISM_K07202345	frentizole	Anti-inflammatory / Immunosuppressant
+AZ960_GDSC_1250	AZ960	JAK-STAT signaling inhibitor
+NSC 74859_CTRP_K40853697	NSC 74859	JAK-STAT signaling inhibitor
+TG-101348_CTRP_K12502280	TG-101348	JAK-STAT signaling inhibitor
+ibrutinib_CTRP_K70301465	ibrutinib	Kinase inhibitor
+SB216763_GDSC_1025	SB 216763	Kinase inhibitor
+PF-573228_CTRP_K79239947	PF-573228	Kinase inhibitor
+saracatinib_CTRP_K19540840	saracatinib	Kinase inhibitor
+R406_PRISM_K20285085	R406	Kinase inhibitor
+BMS-690514_PRISM_K76239644	BMS-690514	VEGFR inhibitor
+tandutinib_CTRP_K89162000	tandutinib	Kinase inhibitor
+sunitinib_CTRP_K42828737	sunitinib	VEGFR inhibitor
+PF-03758309_PRISM_K37764012	PF-03758309	Kinase inhibitor
+ERK_2440_GDSC_1713	ERK_2440	MAPK inhibitor
+ERK_6604_GDSC_1714	ERK_6604	MAPK inhibitor
+SCH772984_GDSC_1564	SCH772984	MAPK inhibitor
+Selumetinib_GDSC_1736	Selumetinib	MAPK inhibitor
+Trametinib_GDSC_1372	trametinib	MAPK inhibitor
+Ulixertinib_GDSC_1908	ULIXERTINIB	MAPK inhibitor
+VX-11e_GDSC_2096	VX-11e	MAPK inhibitor
+PD0325901_GDSC_1060	Mirdametinib	MAPK inhibitor
+Vinorelbine_GDSC_2048	Vinorelbine	Microtubule agent
+parbendazole_CTRP_K02407574	parbendazole	Microtubule agent
+EVP4593_PRISM_K68395654	EVP4593	NFkB signaling inhibitor
+NPC-26_CTRP_K36852164	NPC-26	Non-apopototic cell death
+piperlongumine:MST-312_CTRP_M37545453	piperlongumine:MST-312	Other
+selumetinib:piperlongumine_CTRP_M89326994	selumetinib:piperlongumine	Other
+tosedostat_PRISM_K92241597	tosedostat	Other
+benzethonium_PRISM_K72723676	BENZETHONIUM	Other
+inosine_PRISM_K79612754	INOSINE 6021	Other
+BPD-00008900_GDSC_1998	BPD-00008900	Other
+VSP34_8731_GDSC_1734	VSP34_8731	Other
+tipifarnib-P1_CTRP_K63195589	TIPIFARNIB-P1	Other
+CD-437_CTRP_K28907958	CD-437	Pro-apoptotic agent
+Acetalax_GDSC_1804	Acetalax	Other
+LE-135_PRISM_K06593056	LE-135	Other
+BRD-K66453893_CTRP_K66453893	BRD-K66453893	Other
+mozavaptan_PRISM_A31095847	Mozavaptan	Other
+Olaparib_GDSC_1017	Olaparib	Other
+AZD2014_GDSC_1441	AZD2014	PI3K/AKT/mTOR inhibitor
+PI-103_CTRP_K67868012	PI-103	PI3K/AKT/mTOR inhibitor
+PF-4708671_GDSC_1129	PF-4708671	PI3K/AKT/mTOR inhibitor
+BRD-K07442505_CTRP_K07442505	BAM7	Pro-apoptotic agent
+UMI-77_GDSC_1939	UMI-77	Pro-apoptotic agent
+birinapant_CTRP_K18589165	BIRINAPANT	Pro-apoptotic agent
+Obatoclax Mesylate_GDSC_1068	Obatoclax	Pro-apoptotic agent
+brefeldin A_CTRP_A31107743	BREFELDIN-A	Pro-apoptotic agent
+fluvastatin_CTRP_A52530402	FLUVASTATIN	Statin
+simvastatin_CTRP_K22134346	SIMVASTATIN	Statin
+MST-312_CTRP_K19894101	MST-312	Other
+Telomerase Inhibitor IX_GDSC_1930	Telomerase Inhibitor IX	Other
+SB-525334_PRISM_K37720887	SB 525334	TGFBR inhibitor
+CR-1-31B_CTRP_K23547378	CR-1-31B	Other
+Dactinomycin_GDSC_1811	DACTINOMYCIN	Other
+foretinib_CTRP_K03449891	FORETINIB	VEGFR inhibitor
+nintedanib_CTRP_K49075727	NINTEDANIB	VEGFR inhibitor
+LGK974_GDSC_1598	LGK974	WNT signaling inhibitor

@@ -1,0 +1,10 @@
+.DS_Store
+aesthetics.RData
+data/beyondcell/
+data/images/source/
+data/loupe/
+data/visium/*.rds
+data/single-cell/
+results/
+figures/
+tables/
