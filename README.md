@@ -17,7 +17,7 @@ You need to download additional data folders from Zenodo (DOI: 10.5281/zenodo.10
 
 * **`single-cell/`:** Contains raw and filtered merged single-cell RNA-seq Seurat objects with unnormalised counts used as a reference for spot deconvolution.
 
-* **`beyondcell/sensitivity`:** Contains Beyondcell sensitivity objects with prediction scores for all drug response signatures in [SSc breast](https://github.com/cnio-bu/drug_susceptibility_collection/tree/breast).
+* **`beyondcell/sensitivity`:** Contains Beyondcell sensitivity objects with prediction scores for all drug response signatures in [SSc breast](https://github.com/cnio-bu/SSc-breast).
 
 * **`beyondcell/functional`:** Contains Beyondcell functional objects with enrichment scores for all functional signatures.
 
