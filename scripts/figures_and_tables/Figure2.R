@@ -5,6 +5,7 @@ library(tidyverse) # tidyverse_2.0.0
 library(Seurat) # Seurat_4.3.0.1
 library(SeuratObject) # SeuratObject_4.1.3
 library(beyondcell) # beyondcell_2.2.0
+library(ggpattern) # ggpattern_1.0.1
 library(ComplexHeatmap) # ComplexHeatmap_2.16.0
 library(circlize) # circlize_0.4.15
 library(patchwork) # patchwork_1.1.3
@@ -114,18 +115,37 @@ fig2B <- metadata %>%
   add_count(tcs, Tumour) %>%
   select(tcs, Tumour, major.tcs, n) %>%
   unique() %>%
-  ggplot(aes(x = tcs, y = n, fill = major.tcs, alpha = Tumour)) +
-  geom_bar(position = "fill", stat = "identity") +
+  ggplot(aes(x = tcs, y = n, fill = major.tcs, )) +
+  geom_bar_pattern(position = "fill", stat = "identity",
+                   mapping = aes(pattern = Tumour),
+                   pattern_density = 0.15, pattern_spacing = 0.01,
+                   pattern_fill = "black", pattern_color = NA)  +
   scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
-  scale_alpha_discrete(range = c(1, 0.6)) +
   scale_fill_manual(values = colour.tctypes) +
-  labs(x = "Therapeutic clusters", y = "Proportion", fill = "Major TC", 
+  scale_pattern_manual(values = c("none", "crosshatch")) +
+  labs(x = "Therapeutic clusters", y = "Proportion", fill = "Major TC",
        alpha = "Annotation") +
   theme_classic() +
   theme(text = element_text(size = 18),
         axis.text = element_text(size = 16),
         axis.text.x = element_text(angle = 45, hjust = 1),
         axis.ticks.x = element_blank(), axis.line = element_blank())
+#fig2B <- metadata %>%
+#  add_count(tcs, Tumour) %>%
+#  select(tcs, Tumour, major.tcs, n) %>%
+#  unique() %>%
+#  ggplot(aes(x = tcs, y = n, fill = major.tcs, alpha = Tumour)) +
+#  geom_bar(position = "fill", stat = "identity") +
+#  scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
+#  scale_alpha_discrete(range = c(1, 0.6)) +
+#  scale_fill_manual(values = colour.tctypes) +
+#  labs(x = "Therapeutic clusters", y = "Proportion", fill = "Major TC",
+#       alpha = "Annotation") +
+#  theme_classic() +
+#  theme(text = element_text(size = 18),
+#        axis.text = element_text(size = 16),
+#        axis.text.x = element_text(angle = 45, hjust = 1),
+#        axis.ticks.x = element_blank(), axis.line = element_blank())
 fig2B
 ggsave(plot = fig2B, filename = paste0(out.dir, "Figure2/proportion.png"))
 
