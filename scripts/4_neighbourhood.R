@@ -25,16 +25,26 @@ edge.neighbourhood <- function(patient.id, column = "main.cell.type",
                                    verbose = FALSE)
   # Region neighbours
   semlaobj <- RegionNeighbors(semlaobj, column_name = "major.tcs",
-                              column_labels = "Mixed",
+                              #column_labels = "Mixed",
                               mode = "inner_outer")
   # Create ID column
   ids <- semlaobj@meta.data %>%
     rownames_to_column("spots") %>%
-    mutate(id = case_when(is.na(nb_to_Mixed) ~ NA_character_,
-                          nb_to_Mixed == "nb_to_Mixed" ~ major.tcs,
-                          TRUE ~ nb_to_Mixed)) %>%
+    pivot_longer(cols = starts_with("nb_to"), names_to = "nb") %>%
+    group_by(spots) %>%
+    mutate(id = case_when(all(is.na(value)) ~ NA_character_,
+                          TRUE ~ major.tcs)) %>%
     select(spots, id) %>%
+    unique() %>%
     column_to_rownames("spots")
+
+  #ids <- semlaobj@meta.data %>%
+  #  rownames_to_column("spots") %>%
+  #  mutate(id = case_when(is.na(nb_to_Mixed) ~ NA_character_,
+  #                        nb_to_Mixed == "nb_to_Mixed" ~ major.tcs,
+  #                        TRUE ~ nb_to_Mixed)) %>%
+  #  select(spots, id) %>%
+  #  column_to_rownames("spots")
   semlaobj <- AddMetaData(semlaobj, ids)
   # Enrichment test
   res <- RunNeighborhoodEnrichmentTest(semlaobj, column_name = "id",
