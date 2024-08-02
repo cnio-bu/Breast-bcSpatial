@@ -8,3 +8,5 @@ data/single-cell/
 results/
 figures/
 tables/
+.Rproj.user
+.Rhistory
