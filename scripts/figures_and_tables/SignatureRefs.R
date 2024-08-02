@@ -44,7 +44,7 @@ df.sigs <- data.frame(sigID = names(functional.sigs)) %>%
         Signature =
           case_when(startsWith(sigID, prefix = "HALLMARK") ~
                       paste(Signature, "(Hallmark)"),
-                    sigID == "REACTOME_PD_1_SIGNALING_UP" ~ 
+                    sigID == "REACTOME_PD_1_SIGNALING_UP" ~
                       "PD-1 SIGNALING (Reactome)",
                     sigID ==
                       paste0("REACTOME_APC_C_CDH1_MEDIATED_DEGRADATION_OF_",
@@ -102,5 +102,5 @@ df.sigs <- df.sigs %>%
   rbind(up.down) %>%
   arrange(Signature)
 
-write.table(df.sigs, file = paste0(out.dir, "SuppTable6.tsv"),
+write.table(df.sigs, file = paste0(out.dir, "SuppTable7.tsv"),
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)

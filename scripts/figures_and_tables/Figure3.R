@@ -35,7 +35,7 @@ bcfunctional <- readRDS("results/all/functional/functional_bcs_regressed.rds")
 interesting <- readGMT("data/signatures/functional_signatures.gmt")
 
 # Drug ranking
-drugrank <- read.table("tables/SuppTable8.tsv", header = TRUE, sep = "\t")
+drugrank <- read.table("tables/SuppTable9.tsv", header = TRUE, sep = "\t")
 
 # Radial distances to the tumour core
 radial.dist <- read.table("results/all/radial_distance.tsv", header = TRUE,
@@ -52,13 +52,14 @@ functional.corr <-
              header = TRUE, sep = "\t")
 
 # Functional signature references
-functional.refs <- read.table("tables/SuppTable6.tsv", header = TRUE,
+functional.refs <- read.table("tables/SuppTable7.tsv", header = TRUE,
                               sep = "\t")
 
 # --- Code ---
 # Create outdirs
 dir.create(paste0(out.dir, "Figure3"), recursive = TRUE, showWarnings = FALSE)
 dir.create("tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("tables/chosenIDs", recursive = TRUE, showWarnings = FALSE)
 
 # Aesthetics
 load("scripts/figures_and_tables/aesthetics.RData")
@@ -185,13 +186,17 @@ functional.supp.table <- functional.corr %>%
   rename(Signature = signature, Patient = patient, Slide = slide,
          Region = region, Pearson.correlation = cor, Statistic = statistic,
          pval = p, FDRpval = p.adj) %>%
-  mutate(conf.low = round(conf.low, digits = 2),
+  mutate(Pearson.correlation = round(Pearson.correlation, digits = 2),
+         Statistic = round(Statistic, digits = 2),
+         pval = formatC(pval, format = "e", digits = 2),
+         FDRpval = formatC(FDRpval, format = "e", digits = 2),
+         conf.low = round(conf.low, digits = 2),
          conf.high = round(conf.high, digits = 2),
          CI95 = paste(conf.low, conf.high, sep = ",")) %>%
   select(Signature, Patient, Slide, Region, Pearson.correlation, Statistic,
          pval, FDRpval, CI95)
 
-write.table(functional.supp.table, file = "tables/SuppTable4.tsv",
+write.table(functional.supp.table, file = "tables/SuppTable5.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 ## Create correlation matrix
@@ -215,6 +220,8 @@ functional.pval.wide <- functional.corr %>%
 
 ## Compute correlation mean per patient
 functional.corr.mean <- colMeans(functional.corr.wide)
+write.table(names(functional.corr.mean), file = "tables/chosenIDs/pathways_Figure3C.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 ## Patient subtype
 subtypes <- bcfunctional@meta.data %>%
@@ -281,14 +288,18 @@ sensitivity.supp.table <- sensitivity.corr %>%
   rename(drugID = signature, Patient = patient, Slide = slide,
          Region = region, Pearson.correlation = cor, Statistic = statistic,
          pval = p, FDRpval = p.adj) %>%
-  mutate(conf.low = round(conf.low, digits = 2),
+  mutate(Pearson.correlation = round(Pearson.correlation, digits = 2),
+         Statistic = round(Statistic, digits = 2),
+         pval = formatC(pval, format = "e", digits = 2),
+         FDRpval = formatC(FDRpval, format = "e", digits = 2),
+         conf.low = round(conf.low, digits = 2),
          conf.high = round(conf.high, digits = 2),
          CI95 = paste(conf.low, conf.high, sep = ",")) %>%
   left_join(moas, by = "drugID") %>%
   select(drugID, drug.name, MoA, Patient, Slide, Region, Pearson.correlation,
          Statistic, pval, FDRpval, CI95)
 
-write.table(sensitivity.supp.table, file = "tables/SuppTable5.tsv",
+write.table(sensitivity.supp.table, file = "tables/SuppTable6.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 ## Create correlation matrix
@@ -312,6 +323,8 @@ sensitivity.pval.wide <- sensitivity.corr %>%
 
 ## Compute correlation mean per patient
 sensitivity.corr.mean <- colMeans(sensitivity.corr.wide)
+write.table(names(sensitivity.corr.mean), file = "tables/chosenIDs/drugs_Figure3C.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 ## Patient subtype
 sensitivity.corr.subtype <-

@@ -30,13 +30,14 @@ interesting <- readGMT("data/signatures/functional_signatures.gmt")
 functional.sigs <- c(reactome, hallmarks, interesting)
 
 # Functional signature references
-functional.refs <- read.table("tables/SuppTable6.tsv", header = TRUE,
+functional.refs <- read.table("tables/SuppTable7.tsv", header = TRUE,
                               sep = "\t")
 
 # --- Code ---
 # Create outdir
 dir.create(paste0(out.dir, "SuppFigure5"), recursive = TRUE,
            showWarnings = FALSE)
+dir.create("tables/chosenIDs", recursive = TRUE, showWarnings = FALSE)
 
 # Aesthetics
 load("scripts/figures_and_tables/aesthetics.RData")
@@ -103,10 +104,15 @@ gsea.table <- gsea %>%
 supp.table <- gsea.table %>%
   rename(Signature = NAME,
          Comparison = COMPARISON) %>%
-  mutate(Comparison = paste(Comparison, "vs rest")) %>%
+  mutate(Comparison = paste(Comparison, "vs rest"),
+         pval = formatC(pval, format = "e", digits = 2),
+         FDR.q.val = formatC(FDR.q.val, format = "e", digits = 2),
+         log2err = round(log2err, digits = 2),
+         ES = round(ES, digits = 2),
+         NES = round(NES, digits = 2)) %>%
   select(Signature, Comparison, pval:leadingEdge)
 
-write.table(supp.table, file = "tables/SuppTable12.tsv",
+write.table(supp.table, file = "tables/SuppTable13.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Get the top 15 signatures per ROI
@@ -115,6 +121,8 @@ chosen.fun.sigs <- gsea.table %>%
   slice_max(order_by = NES, n = 15, by = COMPARISON) %>%
   pull(NAME) %>%
   unique()
+write.table(chosen.fun.sigs, file = "tables/chosenIDs/pathways_SuppFigure5C.tsv",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 gsea.table <- gsea.table %>%
   filter(NAME %in% chosen.fun.sigs) %>%

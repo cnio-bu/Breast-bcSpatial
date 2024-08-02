@@ -2,7 +2,7 @@
 # install.packages("figpatch")
 rm(list = ls()) # R version 4.3.1 (1823-06-16)
 library(tidyverse) # tidyverse_2.0.0
-library(beyondcell) #beyondcell_2.2.0
+library(beyondcell) # beyondcell_2.2.0
 library(fgsea) # fgsea_1.26.0
 library(ggseabubble) # ggseabubble_0.1.0
 library(ComplexHeatmap) # ComplexHeatmap_2.16.0
@@ -26,16 +26,17 @@ interesting <- readGMT("data/signatures/functional_signatures.gmt")
 functional.sigs <- c(reactome, hallmarks, interesting)
 
 # Drug ranking
-drugrank <- read.table("tables/SuppTable11.tsv", header = TRUE, sep = "\t")
+drugrank <- read.table("tables/SuppTable12.tsv", header = TRUE, sep = "\t")
 
 # Functional signature references
-functional.refs <- read.table("tables/SuppTable6.tsv", header = TRUE,
+functional.refs <- read.table("tables/SuppTable7.tsv", header = TRUE,
                               sep = "\t")
 
 # --- Code ---
 # Create outdirs
 dir.create(paste0(out.dir, "Figure4"), recursive = TRUE, showWarnings = FALSE)
 dir.create("tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("tables/chosenIDs", recursive = TRUE, showWarnings = FALSE)
 
 # Aesthetics
 load("scripts/figures_and_tables/aesthetics.RData")
@@ -91,10 +92,15 @@ gsea.table <- gsea %>%
 supp.table <- gsea.table %>%
   rename(Signature = NAME,
          Comparison = COMPARISON) %>%
-  mutate(Comparison = paste(Comparison, "vs rest")) %>%
+  mutate(Comparison = paste(Comparison, "vs rest"),
+         pval = formatC(pval, format = "e", digits = 2),
+         FDR.q.val = formatC(FDR.q.val, format = "e", digits = 2),
+         log2err = round(log2err, digits = 2),
+         ES = round(ES, digits = 2),
+         NES = round(NES, digits = 2)) %>%
   select(Signature, Comparison, pval:leadingEdge)
 
-write.table(supp.table, file = "tables/SuppTable10.tsv",
+write.table(supp.table, file = "tables/SuppTable11.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Get the top 15 signatures per major TC
@@ -125,6 +131,8 @@ figure.sigs <-
 chosen.fun.sigs <- functional.refs %>%
   filter(sigID %in% figure.sigs) %>%
   pull(Signature)
+write.table(chosen.fun.sigs, file = "tables/chosenIDs/pathways_Figure4D.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 gsea.plot <- gsea.table %>%
   filter(NAME %in% chosen.fun.sigs) %>%
@@ -157,6 +165,8 @@ rownames(moas) <- moas$drugID
 chosen.drugs <- drugrank %>%
   pull(drugID) %>%
   unique()
+write.table(chosen.drugs, file = "tables/chosenIDs/drugs_Figure4E.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Get metadata
 metadata <- bctumour@meta.data %>%

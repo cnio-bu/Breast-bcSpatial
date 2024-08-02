@@ -116,7 +116,7 @@ ranking <- ranking %>%
   select(drugID, drug_name, MoA, tumour_TC, response, switch_point, mean,
          residuals_mean)
 
-write.table(ranking, file = "tables/SuppTable11.tsv",
+write.table(ranking, file = "tables/SuppTable12.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Save

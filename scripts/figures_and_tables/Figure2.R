@@ -177,7 +177,7 @@ proportion <- metadata %>%
 proportion <- proportion[match(patient.order, proportion$patient), ]
 proportion <- proportion[c("patient", "subtype", "Tumour-rich", "Mixed",
                            "TME-rich")]
-write.table(proportion, file = "tables/SuppTable3.tsv", sep = "\t",
+write.table(proportion, file = "tables/SuppTable4.tsv", sep = "\t",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Neighbourhood enrichment

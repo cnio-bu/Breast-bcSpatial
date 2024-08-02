@@ -90,7 +90,7 @@ proportion <- metadata %>%
   arrange(desc(prop))
 proportion
 
-write.table(proportion, file = "tables/SuppTable2.tsv", sep = "\t",
+write.table(proportion, file = "tables/SuppTable3.tsv", sep = "\t",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 bcmerged@meta.data <- metadata %>%

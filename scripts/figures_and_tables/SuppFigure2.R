@@ -26,10 +26,10 @@ interesting <- readGMT("data/signatures/functional_signatures.gmt")
 functional.sigs <- c(reactome, hallmarks, interesting)
 
 # Drug ranking
-drugrank <- read.table("tables/SuppTable8.tsv", header = TRUE, sep = "\t")
+drugrank <- read.table("tables/SuppTable9.tsv", header = TRUE, sep = "\t")
 
 # Functional signature references
-functional.refs <- read.table("tables/SuppTable6.tsv", header = TRUE,
+functional.refs <- read.table("tables/SuppTable7.tsv", header = TRUE,
                               sep = "\t")
 
 # --- Code ---
@@ -37,6 +37,7 @@ functional.refs <- read.table("tables/SuppTable6.tsv", header = TRUE,
 dir.create(paste0(out.dir, "SuppFigure2"), recursive = TRUE,
            showWarnings = FALSE)
 dir.create("tables", recursive = TRUE, showWarnings = FALSE)
+dir.create("tables/chosenIDs", recursive = TRUE, showWarnings = FALSE)
 
 # Aesthetics
 load("scripts/figures_and_tables/aesthetics.RData")
@@ -73,10 +74,15 @@ gsea.table <- gsea %>%
 supp.table <- gsea.table %>%
   rename(Signature = NAME,
          Comparison = COMPARISON) %>%
-  mutate(Comparison = paste(Comparison, "vs rest")) %>%
+  mutate(Comparison = paste(Comparison, "vs rest"),
+         pval = formatC(pval, format = "e", digits = 2),
+         FDR.q.val = formatC(FDR.q.val, format = "e", digits = 2),
+         log2err = round(log2err, digits = 2),
+         ES = round(ES, digits = 2),
+         NES = round(NES, digits = 2)) %>%
   select(Signature, Comparison, pval:leadingEdge)
 
-write.table(supp.table, file = "tables/SuppTable7.tsv",
+write.table(supp.table, file = "tables/SuppTable8.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Get the top 15 signatures per major TC
@@ -85,6 +91,8 @@ chosen.fun.sigs <- gsea.table %>%
   slice_max(order_by = NES, n = 15, by = COMPARISON) %>%
   pull(NAME) %>%
   unique()
+write.table(chosen.fun.sigs, file = "tables/chosenIDs/pathways_SuppFigure2A.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 gsea.plot <- gsea.table %>%
   filter(NAME %in% chosen.fun.sigs) %>%
@@ -119,6 +127,8 @@ rownames(moas) <- moas$drugID
 chosen.drugs <- drugrank %>%
   pull(drugID) %>%
   unique()
+write.table(chosen.drugs, file = "tables/chosenIDs/drugs_SuppFigure2B.txt",
+            sep = "\n", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Get metadata
 metadata <- bcmerged@meta.data %>%

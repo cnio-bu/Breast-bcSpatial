@@ -71,7 +71,7 @@ proportion[is.na(proportion)] <- 0
 proportion <- proportion[match(patient.order, proportion$patient), ]
 proportion <- proportion[c("patient", "subtype", "TC1.1", "TC1.2", "TC2",
                            "TC3")]
-write.table(proportion, file = "tables/SuppTable9.tsv", sep = "\t",
+write.table(proportion, file = "tables/SuppTable10.tsv", sep = "\t",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Distances to the tumour core
