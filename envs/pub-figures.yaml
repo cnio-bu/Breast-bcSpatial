@@ -22,6 +22,9 @@ dependencies:
   - r-rstatix
   - bioconductor-spotlight
   - r-scatterpie
-  - r-ggpubr
+  - conda-forge::r-ggpubr
   - r-survminer
+  - r-ggpattern
+  - conda-forge::r-clustree
+  - r-biocmanager
 prefix: /Users/mjjimenez/miniconda3/envs/pub-figures

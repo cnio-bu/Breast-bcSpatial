@@ -1,10 +1,10 @@
 # conda activate pub-figures
 # install.packages("figpatch")
-rm(list = ls()) # R version 4.3.1 (1823-06-16)
+rm(list = ls()) # R version 4.3.1 (2023-06-16)
 library(tidyverse) # tidyverse_2.0.0
 library(Seurat) # Seurat_4.3.0.1
 library(SeuratObject) # SeuratObject_4.1.3
-library(beyondcell) #beyondcell_2.2.0
+library(beyondcell) # beyondcell_2.2.0
 library(corrplot) # corrplot_0.92
 library(patchwork) # patchwork_1.1.3
 library(figpatch) # figpatch_0.2

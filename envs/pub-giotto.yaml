@@ -1,0 +1,20 @@
+name: pub-giotto
+channels:
+  - bu_cnio
+  - conda-forge
+  - bioconda
+  - r
+dependencies:
+  - r-seurat=4.3.0.1
+  - r-seuratobject=4.1.3
+  - bu_cnio::r-beyondcell=2.2.0
+  - ca-certificates
+  - openssl
+  - r-devtools
+  - bioconda::bioconductor-complexheatmap
+  - conda-forge::r-magick
+  - conda-forge::r-rstatix
+  - conda-forge::r-pak
+  - conda-forge::r-terra
+  - python
+prefix: /Users/mjjimenez/miniconda3/envs/pub-giotto

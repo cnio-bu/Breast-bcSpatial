@@ -13,4 +13,5 @@ dependencies:
   - openssl
   - bioconductor-limma
   - r-matrix.utils
+  - conda-forge::r-rstatix
 prefix: /Users/mjjimenez/miniconda3/envs/pub-beyondcell

@@ -1,4 +1,4 @@
-# conda activate pub-beyoncell
+# conda activate pub-beyondcell
 rm(list = ls()) # R version 4.3.1 (2023-06-16)
 library(tidyverse) # tidyverse_2.0.0
 library(Seurat) # Seurat_4.3.0.1

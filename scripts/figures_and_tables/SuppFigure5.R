@@ -6,11 +6,18 @@ library(SeuratObject) # SeuratObject_4.1.3
 library(fgsea) # fgsea_1.26.0
 library(ggseabubble) # ggseabubble_0.1.0
 library(beyondcell) # beyondcell_2.2.0
+library(clustree) # clustree_0.5.1
 library(RColorBrewer) # RColorBrewer_1.1-3
 library(patchwork) # patchwork_1.1.3
 library(figpatch) # figpatch_0.2
 set.seed(1)
 out.dir <- "figures/"
+
+# --- Functions ---
+# Computes the proportion of tumour spots in each cluster
+prop.tumour <- function(x) {
+  sum(x == "Tumour") / length(x)
+}
 
 # --- Data ---
 # Seurat object with ROI annotation
@@ -52,7 +59,7 @@ figSupp5A <- SpatialDimPlot(seuratobj, group.by = "ROI", pt.size = 1.5,
       theme(text = element_text(size = 18), legend.position = "none",
             plot.title = element_text(size = 22, hjust = 0.5, face = "bold"))
   }) |>
-  wrap_plots(nrow = 1)
+  wrap_plots(ncol = 1)
 figSupp5A
 ggsave(plot = figSupp5A,
        filename = paste0(out.dir, "SuppFigure5/HE_image.png"))
@@ -68,11 +75,21 @@ figSupp5B <- SpatialDimPlot(seuratobj, group.by = "sub.cluster", pt.size = 1.5,
       theme(text = element_text(size = 18),
             legend.key = element_rect(fill = NA))
   }) |>
-  wrap_plots(nrow = 1) +
+  wrap_plots(ncol = 1) +
   plot_layout(guides = "collect")
 figSupp5B
 ggsave(plot = figSupp5B,
        filename = paste0(out.dir, "SuppFigure5/expression_clusters.png"))
+
+# Clustree
+figSupp5C <-
+  clustree(seuratobj@meta.data, prefix = "SCT_snn_res.",
+           node_colour = "Tumour", node_colour_aggr = "prop.tumour") +
+  scale_colour_gradient2(low = "#2998AC", mid = "#C2228AFF",
+                         high = "#FF5D5DFF", midpoint = 0.5)
+figSupp5C
+ggsave(plot = figSupp5C, height = 7,
+       filename = paste0(out.dir, "SuppFigure5/clustree.pdf"))
 
 # Compute fgsea
 comparisons <- unique(dea$ROI)
@@ -115,10 +132,10 @@ supp.table <- gsea.table %>%
 write.table(supp.table, file = "tables/SuppTable13.tsv",
             sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
-# Get the top 15 signatures per ROI
+# Get the top 7 signatures per ROI
 chosen.fun.sigs <- gsea.table %>%
   filter(FDR.q.val < 0.25) %>%
-  slice_max(order_by = NES, n = 15, by = COMPARISON) %>%
+  slice_max(order_by = NES, n = 7, by = COMPARISON) %>%
   pull(NAME) %>%
   unique()
 write.table(chosen.fun.sigs, file = "tables/chosenIDs/pathways_SuppFigure5C.tsv",
@@ -139,11 +156,38 @@ pdf(paste0(out.dir, "SuppFigure5/bubble_functional.pdf"), width = 18.78,
 bubbleheat
 dev.off()
 
-figSupp5C <- fig(paste0(out.dir, "SuppFigure5/bubble_functional.pdf"))
+figSupp5D <- fig(paste0(out.dir, "SuppFigure5/bubble_functional.pdf"))
+
+# Sankey diagram (output of scripts/reviewers/cellchat.R)
+figSupp5E <- fig(paste0(out.dir, "reviewers/sankey_TMEinteractions_IGF.pdf"))
+
+# Trastuzumab response
+trastuzumab <- GenerateGenesets("data/signatures/immunotherapy.gmt")
+bcobj.trastuzumab <- bcScore(seuratobj, trastuzumab, expr.thres = 0.1)
+
+figSupp5F <-
+  bcSignatures(bcobj.trastuzumab, signatures = list(values = "LIU_TRASTUZUMAB_RESPONSE"),
+               spatial = TRUE, pt.size = 1.5, image.alpha = 0.7) |>
+  lapply(FUN = function(x) {
+    x + ggtitle(NULL)
+  }) |>
+  wrap_plots(nrow = 2) +
+  plot_layout(guides = "collect") +
+  plot_annotation(title = "Trastuzumab sensitivity",
+                  subtitle = "HER2 inhibitor, Monoclonal antibody") &
+  theme(text = element_text(size = 18),
+        plot.title = element_text(size = 22, hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(size = 22, hjust = 0.5),
+        legend.position = "bottom")
+figSupp5F
+ggsave(plot = figSupp5F, filename = "figures/SuppFigure5/trastuzumab.pdf",
+       height = 11.5, width = 6.5)
 
 # Save figure
-figSupp5 <- figSupp5A / figSupp5B / figSupp5C +
-  plot_layout(heights = c(2, 2, 5)) +
+figSupp5 <- (((figSupp5A | figSupp5B | figSupp5C)  +
+                plot_layout(widths = c(1, 1, 2))) / figSupp5D /
+               ((figSupp5E | figSupp5F) + plot_layout(widths = c(3, 1)))) +
+  plot_layout(heights = c(4, 5, 5)) +
   plot_annotation(tag_levels = "A") &
   theme(plot.tag = element_text(face = "bold", size = 30))
 

@@ -1,6 +1,6 @@
 # conda activate pub-figures
 # install.packages("figpatch")
-rm(list = ls()) # R version 4.3.1 (1823-06-16)
+rm(list = ls()) # R version 4.3.1 (2023-06-16)
 library(tidyverse) # tidyverse_2.0.0
 library(Seurat) # Seurat_4.3.0.1
 library(SeuratObject) # SeuratObject_4.1.3
@@ -130,22 +130,6 @@ fig2B <- metadata %>%
         axis.text = element_text(size = 16),
         axis.text.x = element_text(angle = 45, hjust = 1),
         axis.ticks.x = element_blank(), axis.line = element_blank())
-#fig2B <- metadata %>%
-#  add_count(tcs, Tumour) %>%
-#  select(tcs, Tumour, major.tcs, n) %>%
-#  unique() %>%
-#  ggplot(aes(x = tcs, y = n, fill = major.tcs, alpha = Tumour)) +
-#  geom_bar(position = "fill", stat = "identity") +
-#  scale_y_continuous(expand = c(0, 0), limits = c(0, NA)) +
-#  scale_alpha_discrete(range = c(1, 0.6)) +
-#  scale_fill_manual(values = colour.tctypes) +
-#  labs(x = "Therapeutic clusters", y = "Proportion", fill = "Major TC",
-#       alpha = "Annotation") +
-#  theme_classic() +
-#  theme(text = element_text(size = 18),
-#        axis.text = element_text(size = 16),
-#        axis.text.x = element_text(angle = 45, hjust = 1),
-#        axis.ticks.x = element_blank(), axis.line = element_blank())
 fig2B
 ggsave(plot = fig2B, filename = paste0(out.dir, "Figure2/proportion.png"))
 
