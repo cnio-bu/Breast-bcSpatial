@@ -3,10 +3,17 @@ rm(list = ls()) # R version 4.3.1 (2023-06-16)
 library(tidyverse) # tidyverse_2.0.0
 library(Seurat) # Seurat_4.3.0.1
 library(SeuratObject) # SeuratObject_4.1.3
+library(clustree) # clustree_0.5.1
 library(semla) # semla_1.1.6
 library(patchwork) # patchwork_1.1.3
 set.seed(1)
 out.dir <- "results/tumour/ROI/"
+
+# --- Functions ---
+# Computes the proportion of tumour spots in each cluster
+prop.tumour <- function(x) {
+  sum(x == "Tumour") / length(x)
+}
 
 # --- Data ---
 # Seurat object
@@ -29,15 +36,24 @@ elbow
 
 # Clustering
 seuratobj <- FindNeighbors(seuratobj, reduction = "pca", dims = 1:30)
-seuratobj <- FindClusters(seuratobj, resolution = 0.25, verbose = FALSE)
+
+resolutions <- c(0.1, 0.25, 0.5, 0.75, 1)
+seuratobj <- FindClusters(seuratobj, resolution = resolutions, verbose = FALSE)
 
 # Run UMAP
 seuratobj <- RunUMAP(seuratobj, reduction = "pca", dims = 1:30,
                      n.components = 2)
 
-# Plot clusters
+# Check cluster stability
 seuratobj@meta.data <- seuratobj@meta.data %>%
-  mutate(SCT_snn_res.0.25 = factor(as.numeric(as.character(SCT_snn_res.0.25)) + 1))
+  mutate(across(starts_with("SCT_snn_res."), function(x) {
+    factor(as.numeric(as.character(x)) + 1)
+  }))
+
+clustree(seuratobj@meta.data, prefix = "SCT_snn_res.",
+         node_colour = "Tumour", node_colour_aggr = "prop.tumour")
+
+# Plot clusters
 Idents(seuratobj) <- "SCT_snn_res.0.25"
 DimPlot(seuratobj, group.by = c("ident", "Phase"))
 DimPlot(seuratobj, group.by = c("ident", "slide"))

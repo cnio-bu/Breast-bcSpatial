@@ -1,5 +1,5 @@
 # conda activate pub-figures
-rm(list = ls()) # R version 4.3.1 (1823-06-16)
+rm(list = ls()) # R version 4.3.1 (2023-06-16)
 library(tidyverse) # tidyverse_2.0.0
 library(beyondcell) # beyondcell_2.2.0
 set.seed(1)

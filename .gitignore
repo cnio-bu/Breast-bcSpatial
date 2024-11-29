@@ -5,6 +5,7 @@ data/images/source/
 data/loupe/
 data/visium/*.rds
 data/single-cell/
+data/benchmarking/
 results/
 figures/
 tables/
